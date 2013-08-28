@@ -5,6 +5,7 @@ defmodule PipeTest do
   def inc(n), do: n + 1
   def double(n), do: n * 2
   def square(n), do: n * n
+  def mult(n, m), do: n * m
 
   "Favor |> over this form. It's here for completeness."
   test "sinple expression piping" do
@@ -34,5 +35,14 @@ defmodule PipeTest do
 
   test "defpipe defines a function that is a pipe of its input argument" do
     assert 100 = double_then_square(5)
+  end
+
+  defpipe mult_n_by_m_then_double(n, m) do
+    mult(m)
+    double
+  end
+
+  test "defpipe with multiple arguments" do
+    assert 84 = mult_n_by_m_then_double(6, 7)
   end
 end
